@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>钓鱼 Wiki · fishing (LL-team AB)</title>
+<link rel="icon" href="https://pic.pngsucai.com/00/92/47/00764b2fd6e8c67e.webp">
+<style>
+:root{
+  --bg:#06101f;
+  --bg2:#0a1c31;
+  --card:rgba(255,255,255,.05);
+  --line:rgba(0,255,255,.22);
+  --cyan:#00ffff;
+  --cyan2:#22d3ee;
+  --gold:#ffd700;
+  --txt:#dbe9f4;
+  --dim:#8ea8bd;
+  --green:#32cd32;
+  --orange:#ffa500;
+  --red:#ff5555;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(1200px 700px at 15% -10%, rgba(0,255,255,.13), transparent 60%),
+    radial-gradient(900px 600px at 90% 0%, rgba(0,120,255,.18), transparent 60%),
+    linear-gradient(180deg,var(--bg) 0%, var(--bg2) 60%, #040b15 100%);
+  background-attachment:fixed;
+  color:var(--txt);
+  font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ============ 顶部导航 ============ */
+header.nav{
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(14px);
+  background:rgba(6,16,31,.82);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:1080px;margin:0 auto;padding:10px 18px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.brand{font-weight:800;font-size:16px;letter-spacing:.5px;color:#fff;white-space:nowrap}
+.brand span{color:var(--cyan)}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap;font-size:14px}
+.nav-links a{
+  color:var(--dim);padding:5px 10px;border-radius:8px;
+  transition:.18s;white-space:nowrap;
+}
+.nav-links a:hover{color:#fff;background:rgba(0,255,255,.1);text-decoration:none}
+
+/* ============ 布局 ============ */
+main{max-width:1080px;margin:0 auto;padding:0 18px 90px}
+section{scroll-margin-top:78px;margin-top:56px}
+h2{
+  font-size:24px;margin:0 0 6px;color:#fff;
+  display:flex;align-items:center;gap:10px;
+}
+h2::before{
+  content:"";width:5px;height:22px;border-radius:3px;
+  background:linear-gradient(180deg,var(--cyan),#0077ff);
+  box-shadow:0 0 12px rgba(0,255,255,.6);
+}
+h3{font-size:17px;color:var(--cyan);margin:26px 0 10px}
+p{margin:10px 0}
+.sub{color:var(--dim);font-size:14px;margin:0 0 20px}
+
+/* ============ Hero ============ */
+.hero{
+  text-align:center;padding:70px 18px 40px;
+  position:relative;overflow:hidden;
+}
+.hero h1{
+  font-size:clamp(30px,6vw,52px);margin:0;letter-spacing:2px;
+  background:linear-gradient(180deg,#ffffff,#66e6ff 60%,#0aa6ff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 22px rgba(0,180,255,.45));
+}
+.hero .tag{
+  display:inline-block;margin-top:14px;padding:4px 14px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(0,255,255,.07);
+  color:var(--cyan);font-size:13px;letter-spacing:1px;
+}
+.hero p{color:var(--dim);max-width:620px;margin:16px auto 0;font-size:15px}
+.stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:12px;max-width:760px;margin:34px auto 0;
+}
+.stat{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 10px;transition:.2s;
+}
+.stat:hover{transform:translateY(-3px);border-color:rgba(0,255,255,.5);box-shadow:0 8px 26px -12px rgba(0,255,255,.6)}
+.stat b{display:block;font-size:22px;color:var(--cyan)}
+.stat small{color:var(--dim);font-size:12px}
+
+/* ============ 卡片 ============ */
+.card{
+  background:var(--card);border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--radius);padding:18px 20px;margin:14px 0;
+}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:720px){
+  .grid2,.grid3{grid-template-columns:1fr}
+}
+
+/* ============ 表格 ============ */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid rgba(255,255,255,.09)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+th{
+  background:rgba(0,255,255,.09);color:var(--cyan);
+  text-align:left;padding:11px 14px;font-weight:600;white-space:nowrap;
+  border-bottom:1px solid var(--line);
+}
+td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:.15s}
+tbody tr:hover{background:rgba(0,255,255,.05)}
+td.num{font-variant-numeric:tabular-nums}
+.price{color:var(--gold);font-weight:700}
+.rare{color:#ff6ec7;font-weight:700}
+
+/* 概率条 */
+.bar{height:7px;border-radius:4px;background:rgba(255,255,255,.09);overflow:hidden;min-width:70px}
+.bar>i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#00ffff,#0077ff)}
+.bar.gold>i{background:linear-gradient(90deg,#ffd700,#ff8c00)}
+
+/* ============ 代码 / 按键 ============ */
+kbd{
+  display:inline-block;padding:2px 8px;margin:0 2px;
+  font-family:ui-monospace,Consolas,monospace;font-size:12.5px;
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);
+  border-bottom-width:2px;border-radius:6px;color:#fff;line-height:1.6;
+}
+code{
+  background:rgba(0,255,255,.08);border:1px solid rgba(0,255,255,.16);
+  padding:1px 7px;border-radius:6px;font-size:13px;color:#9be7ff;
+  font-family:ui-monospace,Consolas,monospace;
+}
+
+/* ============ 流程条 ============ */
+.flow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:16px 0}
+.flow .step{
+  flex:1;min-width:120px;text-align:center;padding:12px 8px;
+  border-radius:12px;background:rgba(0,255,255,.07);
+  border:1px solid var(--line);font-size:13.5px;
+}
+.flow .step b{display:block;color:var(--cyan);font-size:14px;margin-bottom:2px}
+.flow .arrow{color:var(--cyan);font-size:18px;opacity:.7}
+
+/* ============ 列表 ============ */
+ul.clean{list-style:none;padding:0;margin:10px 0}
+ul.clean li{
+  padding:9px 0 9px 26px;position:relative;
+  border-bottom:1px dashed rgba(255,255,255,.07);
+}
+ul.clean li:last-child{border-bottom:none}
+ul.clean li::before{
+  content:"▸";position:absolute;left:6px;color:var(--cyan);
+}
+
+/* ============ 提示框 ============ */
+.tip{
+  border-left:3px solid var(--cyan);background:rgba(0,255,255,.06);
+  padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:14px;
+}
+.tip.warn{border-left-color:var(--orange);background:rgba(255,165,0,.08)}
+.tip.bad{border-left-color:var(--red);background:rgba(255,85,85,.08)}
+.tip b{color:#fff}
+
+/* ============ 计算器 ============ */
+.calc{
+  background:linear-gradient(135deg,rgba(0,255,255,.09),rgba(0,110,255,.07));
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px;margin:18px 0;
+}
+.calc-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.calc-row label{font-size:14px;color:var(--dim);white-space:nowrap}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;
+  flex:1;min-width:160px;height:8px;border-radius:5px;
+  background:linear-gradient(90deg,var(--cyan),#0a6dff);outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  background:#fff;border:3px solid var(--cyan);cursor:pointer;
+  box-shadow:0 0 12px rgba(0,255,255,.8);
+}
+input[type=range]::-moz-range-thumb{
+  width:18px;height:18px;border-radius:50%;background:#fff;
+  border:3px solid var(--cyan);cursor:pointer;
+}
+.calc-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.calc-out div{
+  background:rgba(0,0,0,.28);border-radius:10px;padding:12px;text-align:center;
+  border:1px solid rgba(255,255,255,.08);
+}
+.calc-out b{display:block;font-size:22px;color:var(--gold);font-variant-numeric:tabular-nums}
+.calc-out small{color:var(--dim);font-size:12px}
+
+/* ============ 设置项 ============ */
+.setting{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:14px 0;border-bottom:1px dashed rgba(255,255,255,.08);
+}
+.setting:last-child{border-bottom:none}
+.setting .ico{
+  flex:0 0 38px;height:38px;border-radius:10px;
+  background:rgba(0,255,255,.1);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;color:var(--cyan);
+}
+.setting .txt{flex:1;min-width:0}
+.setting .txt b{color:#fff;font-size:14.5px}
+.setting .txt p{margin:2px 0 0;font-size:13.5px;color:var(--dim)}
+
+/* ============ 页脚 ============ */
+footer{
+  text-align:center;padding:40px 18px 60px;
+  color:var(--dim);font-size:13px;border-top:1px solid rgba(255,255,255,.07);
+  margin-top:60px;
+}
+footer b{color:var(--cyan)}
+
+/* 回到顶部 */
+#toTop{
+  position:fixed;right:18px;bottom:18px;width:46px;height:46px;
+  border-radius:50%;background:rgba(0,255,255,.14);
+  border:1px solid var(--line);color:var(--cyan);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;cursor:pointer;z-index:90;
+  opacity:0;pointer-events:none;transition:.25s;backdrop-filter:blur(8px);
+}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{background:rgba(0,255,255,.28);transform:translateY(-3px)}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">钓鱼<span>Wiki</span></div>
+    <nav class="nav-links">
+      <a href="#overview">概览</a>
+      <a href="#controls">操作</a>
+      <a href="#fishing">钓鱼机制</a>
+      <a href="#fish">鱼类图鉴</a>
+      <a href="#rod">鱼竿升级</a>
+      <a href="#economy">经济系统</a>
+      <a href="#hunger">饥饿</a>
+      <a href="#multi">联机</a>
+      <a href="#settings">设置</a>
+      <a href="#tips">技巧</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>fishing</h1>
+  <div class="tag">LL-team AB · 3D 多人钓鱼</div>
+  <p>一座海岛、一片大海、十级鱼竿。抛竿、等待、咬钩、收线——把鱼卖成钱，把鱼竿升到满级，顺便和房间里的陌生人聊两句。</p>
+  <div class="stats">
+    <div class="stat"><b>10</b><small>鱼竿等级</small></div>
+    <div class="stat"><b>10</b><small>鱼类品种</small></div>
+    <div class="stat"><b>1.5s</b><small>满级等待</small></div>
+    <div class="stat"><b>20s</b><small>1级等待</small></div>
+    <div class="stat"><b>∞</b><small>在线人数</small></div>
+  </div>
+</div>
+
+<main>
+
+<!-- ================= 概览 ================= -->
+<section id="overview">
+  <h2>游戏概览</h2>
+  <p class="sub">这是一款基于 Three.js 的 3D 第一人称钓鱼游戏，支持 PC 与手机，支持多人联机同屏。</p>
+
+  <div class="card">
+    <p>你出生在海岛中央的草地上，面朝大海。核心循环非常简单：</p>
+    <div class="flow">
+      <div class="step"><b>抛竿</b>瞄准水面右键</div>
+      <div class="arrow">→</div>
+      <div class="step"><b>等待</b>鱼漂入水</div>
+      <div class="arrow">→</div>
+      <div class="step"><b>咬钩</b>准星变红</div>
+      <div class="arrow">→</div>
+      <div class="step"><b>收线</b>获得鱼获</div>
+      <div class="arrow">→</div>
+      <div class="step"><b>卖钱</b>升级鱼竿</div>
+    </div>
+    <p style="margin-bottom:0">游戏会自动存档（本地 localStorage），关掉网页再打开也能接着玩。联机部分使用公共 MQTT 服务器，所有人默认在同一个房间。</p>
+  </div>
+
+  <div class="grid3">
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">世界构成</h3>
+      <p style="font-size:14px;margin:0">中央海岛（草地＋沙滩）四周环海，海面有实时波浪，水下会自动切换蓝色滤镜。海床深度约 15 单位。</p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">多人联机</h3>
+      <p style="font-size:14px;margin:0">其他玩家的位置、朝向、名字、皮肤、鱼漂与鱼线都会实时同步，还带聊天频道。</p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">自动存档</h3>
+      <p style="font-size:14px;margin:0">每 5 秒自动保存一次，关闭页面前也会保存。金钱、背包、等级、设置、位置全部保留。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 操作 ================= -->
+<section id="controls">
+  <h2>操作指南</h2>
+  <p class="sub">游戏会自动检测设备类型，也可以在设置里手动切换「触屏模式」。</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">PC 键盘鼠标</h3>
+      <div class="table-wrap">
+        <table style="min-width:0">
+          <thead><tr><th>操作</th><th>按键</th></tr></thead>
+          <tbody>
+            <tr><td>前后左右移动</td><td><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></td></tr>
+            <tr><td>转动视角</td><td>鼠标移动（需点击画面锁定指针）</td></tr>
+            <tr><td>冲刺</td><td><kbd>Shift</kbd> 或 <kbd>Ctrl</kbd></td></tr>
+            <tr><td>跳跃 / 水中上浮</td><td><kbd>Space</kbd></td></tr>
+            <tr><td>抛竿 / 收线</td><td>鼠标<b>右键</b></td></tr>
+            <tr><td>打开聊天</td><td><kbd>T</kbd> 或 <kbd>Enter</kbd></td></tr>
+            <tr><td>打开商店</td><td><kbd>B</kbd></td></tr>
+            <tr><td>打开设置</td><td><kbd>Esc</kbd></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">手机 / 触屏</h3>
+      <div class="table-wrap">
+        <table style="min-width:0">
+          <thead><tr><th>操作</th><th>方式</th></tr></thead>
+          <tbody>
+            <tr><td>移动</td><td>左下角虚拟摇杆（推到底自动冲刺）</td></tr>
+            <tr><td>转动视角</td><td>在屏幕<b>右半边</b>按住拖动</td></tr>
+            <tr><td>跳跃 / 上浮</td><td>右下角「跳」按钮</td></tr>
+            <tr><td>聊天</td><td>右下角「聊」按钮</td></tr>
+            <tr><td>抛竿 / 收线</td><td><b>轻点</b>画面（不拖动、0.3 秒内）</td></tr>
+            <tr><td>商店 / 设置</td><td>左上角常驻图标</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip" style="margin-bottom:0">
+        <b>小提示：</b>触屏模式下轻点画面会先出现一个「光圈」特效，这是正常的触控反馈。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 钓鱼机制 ================= -->
+<section id="fishing">
+  <h2>钓鱼机制详解</h2>
+  <p class="sub">理解这四步，你就掌握了这款游戏的全部核心。</p>
+
+  <div class="card">
+    <h3 style="margin-top:0">① 抛竿</h3>
+    <p>按下抛竿键后，系统会从<b>屏幕正中央</b>发出一条射线，与水面（y = 0）求交，落点就是鱼漂位置。</p>
+    <ul class="clean">
+      <li>最远抛竿距离：<b>30 单位</b>，超出会自动截断</li>
+      <li>鱼漂会沿抛物线飞出，飞行约 <b>0.4 秒</b></li>
+      <li>落点在陆地上时，鱼漂会停在陆地表面</li>
+    </ul>
+    <div class="tip bad">
+      <b>关键陷阱：</b>如果鱼漂落在<b>陆地</b>上，<b>永远不会咬钩</b>！游戏会一直卡在等待状态，直到你手动收线。抛竿前请务必对准水面。
+    </div>
+
+    <h3>② 等待</h3>
+    <p>鱼漂入水后会上下浮动，等待时间由鱼竿等级决定（见「鱼竿升级」章节）。每竿额外有 <b>±1 秒</b>的随机浮动，避免节奏过于机械。</p>
+
+    <h3>③ 咬钩</h3>
+    <p>鱼咬钩时会出现明显提示：</p>
+    <ul class="clean">
+      <li>屏幕中央<b>准星变红并跳动</b></li>
+      <li>鱼漂<b>下沉并剧烈摇晃</b></li>
+      <li>鱼竿呈后拉姿态</li>
+    </ul>
+    <div class="tip warn">
+      <b>限时 2 秒！</b>咬钩后 2 秒内没有收线，鱼就会跑掉，需要重新等待一轮，并提示「鱼跑了，继续等待…」。
+    </div>
+
+    <h3>④ 收线与收获</h3>
+    <p>在咬钩窗口内收线即可获得鱼获，屏幕上会弹出 <code>+1 鱼名</code> 的漂浮提示。</p>
+    <ul class="clean">
+      <li>每次必定获得 <b>1 条鱼</b>（按权重随机）</li>
+      <li>额外有 <b>75% 概率</b>再获得 <b>1 只虾</b>（售价 ￥1）</li>
+      <li>新钓到的鱼默认是「生鱼」状态</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 鱼类图鉴 ================= -->
+<section id="fish">
+  <h2>鱼类图鉴</h2>
+  <p class="sub">共 10 种鱼 + 1 种额外产出。概率由各鱼种的「权重」占总权重的比例决定。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>鱼类</th>
+          <th class="num">售价</th>
+          <th class="num">权重</th>
+          <th class="num">出现概率</th>
+          <th style="width:150px">概率条</th>
+        </tr>
+      </thead>
+      <tbody id="fish-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">单竿收益期望</h3>
+      <ul class="clean" style="margin:0">
+        <li>包含大肥鱼：约 <b class="price">￥15.6</b> / 竿</li>
+        <li>不包含大肥鱼：约 <b class="price">￥12.0</b> / 竿</li>
+        <li>大肥鱼单独贡献了约 <b>24%</b> 的期望收益</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">关于大肥鱼</h3>
+      <p style="font-size:14px;margin:0">
+        售价高达 <b class="price">￥10000</b>，权重仅 0.05，概率约 <b class="rare">0.036%</b>。
+        平均约 <b>2800 竿</b> 才会遇到一次。钓到它基本等于直接跳过好几级鱼竿升级。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 鱼竿 ================= -->
+<section id="rod">
+  <h2>鱼竿升级</h2>
+  <p class="sub">鱼竿等级决定了「等待咬钩的时间」，等级越高收益越快。在商店里点「升级」按钮购买。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>等级</th>
+          <th>颜色</th>
+          <th class="num">基础等待</th>
+          <th class="num">升至下一级花费</th>
+        </tr>
+      </thead>
+      <tbody id="rod-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="tip">
+    <b>说明：</b>表格中的「基础等待」为理论值，实际每竿会额外加上 <b>±1 秒</b> 的随机浮动。
+    满级（10 级）的等待时间固定为 <b>1 ~ 2 秒</b>随机，几乎可以连续狂拉。
+  </div>
+
+  <div class="calc">
+    <h3 style="margin-top:0">升级花费计算器</h3>
+    <div class="calc-row">
+      <label>当前鱼竿等级</label>
+      <input type="range" id="lvlRange" min="1" max="10" step="1" value="1">
+      <label>Lv.<b id="lvlText" style="color:var(--cyan)">1</b></label>
+    </div>
+    <div class="calc-out">
+      <div><b id="outCost">51100</b><small>升到满级总花费 ￥</small></div>
+      <div><b id="outSteps">9</b><small>还需升级次数</small></div>
+      <div><b id="outWait">20</b><small>当前基础等待（秒）</small></div>
+      <div><b id="outFish">51100</b><small>约需钓多少竿回本</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 经济 ================= -->
+<section id="economy">
+  <h2>经济系统 · 商店</h2>
+  <p class="sub">按 <kbd>B</kbd> 或点击左上角购物车图标打开商店。</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">卖鱼</h3>
+      <ul class="clean" style="margin:0">
+        <li>点击左侧「背包」里的鱼即可选中（青色边框）</li>
+        <li>点击卡片上的「卖出」按钮，立即获得对应金币</li>
+        <li>只能卖<b>生鱼</b>，烤熟的鱼不可出售</li>
+        <li>背包为空时会提示「背包为空，去钓鱼吧！」</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">烤鱼与食用</h3>
+      <ul class="clean" style="margin:0">
+        <li>先在左侧<b>选中一条生鱼</b></li>
+        <li>点击右侧「烤制选中的鱼（花费 ￥5）」</li>
+        <li>烤熟后卡片按钮变为绿色的「食用 (+20)」</li>
+        <li>食用后回复 <b>20 点饥饿值</b>，鱼消失</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">经济策略建议</h3>
+    <ul class="clean" style="margin:0">
+      <li>前期优先卖<b>鲩鱼（￥20）、章鱼（￥25）、草鱼（￥15）</b>攒钱升级鱼竿</li>
+      <li>饥饿值低于 30 时再考虑烤鱼，<b>不要用高价鱼烤</b>——一条鲩鱼能卖 20 元，烤了只回 20 饥饿</li>
+      <li>用<b>虾、金鱼、鲍鱼</b>这类低价鱼去烤最划算</li>
+      <li>鱼竿等级越高，单位时间收入提升越明显，前中期优先升级</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 饥饿 ================= -->
+<section id="hunger">
+  <h2>饥饿系统</h2>
+  <p class="sub">屏幕左下角的蓝色进度条。饥饿值会随时间自然下降，归零会受到惩罚。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>状态</th><th class="num">每扣 1 点间隔</th><th class="num">从满到空耗时</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>静止不动</td><td class="num">10 秒</td><td class="num">约 16.7 分钟</td></tr>
+        <tr><td>移动中 / 跳跃</td><td class="num">5 秒</td><td class="num">约 8.3 分钟</td></tr>
+        <tr><td>冲刺中</td><td class="num">2 秒</td><td class="num">约 3.3 分钟</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">进度条颜色</h3>
+      <ul class="clean" style="margin:0">
+        <li><span style="color:#00BFFF">■</span> 60 ~ 100：蓝色（正常）</li>
+        <li><span style="color:#FFA500">■</span> 30 ~ 59：橙色（注意）</li>
+        <li><span style="color:#FF0000">■</span> 0 ~ 29：红色（危险）</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">饿死惩罚</h3>
+      <ul class="clean" style="margin:0">
+        <li>屏幕闪红，饥饿值<b>重置为 100</b></li>
+        <li>鱼竿等级 <b>-1</b>（最低降到 1 级）</li>
+        <li>若已是 1 级，不扣等级但仍会重置饥饿</li>
+        <li>正在进行的钓鱼会被强制中断</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 联机 ================= -->
+<section id="multi">
+  <h2>多人联机</h2>
+  <p class="sub">进入游戏即自动连接，无需房间号、无需登录。</p>
+
+  <div class="card">
+    <h3 style="margin-top:0">技术细节</h3>
+    <div class="table-wrap">
+      <table style="min-width:0">
+        <tbody>
+          <tr><td style="color:var(--dim);width:130px">通信协议</td><td>MQTT over WebSocket（wss）</td></tr>
+          <tr><td style="color:var(--dim)">服务器</td><td><code>broker.hivemq.com:8884/mqtt</code></td></tr>
+          <tr><td style="color:var(--dim)">房间标识</td><td><code>fishing_game_room_alpha_998</code></td></tr>
+          <tr><td style="color:var(--dim)">状态广播</td><td>每 0.1 秒一次</td></tr>
+          <tr><td style="color:var(--dim)">掉线判定</td><td>5 秒无消息即移除该玩家</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">同步内容</h3>
+      <ul class="clean" style="margin:0">
+        <li>玩家位置与朝向（平滑插值移动）</li>
+        <li>头顶名字标签</li>
+        <li>自定义皮肤贴图</li>
+        <li>鱼漂位置与鱼线曲线</li>
+        <li>聊天消息</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">聊天</h3>
+      <ul class="clean" style="margin:0">
+        <li>PC：<kbd>T</kbd> / <kbd>Enter</kbd> 打开输入框，<kbd>Enter</kbd> 发送，<kbd>Esc</kbd> 取消</li>
+        <li>手机：点右下角「聊」按钮，弹出输入面板</li>
+        <li>单条消息最多 <b>50 字</b></li>
+        <li>屏幕上最多同时显示 <b>5 条</b>，5 秒后自动淡出</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip warn">
+    <b>注意：</b>游戏使用的是公共 MQTT 服务器和固定房间号，理论上陌生人也能进入同一房间。
+    聊天内容和皮肤会广播给房间内所有人，请不要发送敏感信息，也不要使用来源不明的图片作为皮肤。
+  </div>
+</section>
+
+<!-- ================= 设置 ================= -->
+<section id="settings">
+  <h2>设置项详解</h2>
+  <p class="sub">按 <kbd>Esc</kbd> 或点击左上角 ☰ 打开设置面板。</p>
+
+  <div class="card">
+    <div class="setting">
+      <div class="ico">名</div>
+      <div class="txt"><b>玩家名字</b><p>显示在自己和其他玩家头顶。默认为随机生成的 64 位字母数字串，修改后最多保留 20 个字符，清空则显示为「无名氏」。</p></div>
+    </div>
+    <div class="setting">
+      <div class="ico">皮</div>
+      <div class="txt"><b>关联本地皮肤文件</b><p>使用浏览器的 File System Access API，选择一个本地图片作为角色圆柱体的贴图。<b>路径会被记住</b>，下次打开自动加载（只要文件没被移动或重命名）。图片会自动压缩到最长边 256px。需要 Chrome / Edge 等支持该 API 的浏览器。</p></div>
+    </div>
+    <div class="setting">
+      <div class="ico">触</div>
+      <div class="txt"><b>触屏模式（0 关 / 1 开）</b><p>开启后显示虚拟摇杆和动作按钮，隐藏准星；关闭则使用鼠标锁定视角。会自动根据设备初始化。</p></div>
+    </div>
+    <div class="setting">
+      <div class="ico">圈</div>
+      <div class="txt"><b>光圈基础大小（20 ~ 150）</b><p>触屏模式下点击画面时出现的反馈光圈直径，默认 60px。</p></div>
+    </div>
+    <div class="setting">
+      <div class="ico">草</div>
+      <div class="txt"><b>显示草地（0 关 / 1 开）</b><p>控制岛上 3000 丛草的显示。关闭可显著提升低端设备的帧率。</p></div>
+    </div>
+    <div class="setting">
+      <div class="ico">浪</div>
+      <div class="txt"><b>海面波浪（0 关 / 1 开）</b><p>控制海面顶点的实时波动与法线重算。这是本作最消耗性能的选项，卡顿时优先关闭它。</p></div>
+    </div>
+    <div class="setting">
+      <div class="ico">敏</div>
+      <div class="txt"><b>摄像机灵敏度（10 ~ 200）</b><p>影响鼠标与触屏拖动的转视角速度，默认 100。</p></div>
+    </div>
+    <div class="setting">
+      <div class="ico">准</div>
+      <div class="txt"><b>准星样式</b><p>1 = 十字「+」；2 = 白色圆点（默认）；3 = 自定义字符。咬钩时准星会变红跳动。</p></div>
+    </div>
+    <div class="setting">
+      <div class="ico">字</div>
+      <div class="txt"><b>自定义准星</b><p>输入最多 2 个字符作为准星，输入后准星样式会自动切换到「3」。</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">存档与皮肤存储</h3>
+    <div class="grid2">
+      <div>
+        <p style="margin-top:0"><b style="color:var(--cyan)">游戏存档</b></p>
+        <ul class="clean" style="margin:0">
+          <li>存储位置：浏览器 <code>localStorage</code></li>
+          <li>键名：<code>fishing_save</code></li>
+          <li>保存内容：金钱、饥饿、鱼竿等级、背包、所有设置、位置与视角</li>
+          <li>自动保存：每 5 秒 + 关闭页面前</li>
+        </ul>
+      </div>
+      <div>
+        <p style="margin-top:0"><b style="color:var(--cyan)">皮肤句柄</b></p>
+        <ul class="clean" style="margin:0">
+          <li>存储位置：浏览器 <code>IndexedDB</code></li>
+          <li>数据库名：<code>FishingGameDB</code></li>
+          <li>只保存文件的「句柄」，不复制文件本身</li>
+          <li>文件被移动 / 删除后会回退到默认黑色圆柱体</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip" style="margin-bottom:0">
+      <b>重置存档：</b>打开浏览器控制台执行 <code>localStorage.removeItem('fishing_save')</code> 后刷新页面即可从头开始。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 技巧 ================= -->
+<section id="tips">
+  <h2>技巧与冷知识</h2>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">实用技巧</h3>
+      <ul class="clean" style="margin:0">
+        <li><b>永远瞄准水面</b>：抛到陆地 = 永久卡住，必须手动收线重抛</li>
+        <li><b>准星对准远处</b>能抛更远，但超过 30 单位会被截断</li>
+        <li><b>水中移动更慢</b>（速度 4 对比陆地 7.5），但冲刺仍然翻倍</li>
+        <li><b>水中按空格可以不断上浮</b>，不会沉下去</li>
+        <li><b>烤鱼用便宜鱼</b>：虾（￥1）、金鱼（￥5）、鲍鱼（￥5）最适合当口粮</li>
+        <li><b>满级鱼竿</b>等待只要 1~2 秒，配合卖鱼几乎可以无限刷钱</li>
+        <li>卡顿时优先关掉<b>海面波浪</b>，其次关掉<b>草地</b></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">冷知识</h3>
+      <ul class="clean" style="margin:0">
+        <li>饿死只掉 <b>1 级</b>鱼竿，但饥饿值会回满，所以后期掉级影响有限</li>
+        <li>熟鱼<b>不能卖</b>，只能吃，别把大肥鱼给烤了</li>
+        <li>默认玩家名由 <b>39 个随机字母 + 25 个随机数字</b>组成，共 64 位</li>
+        <li>其他玩家的角色是一个<b>圆柱体</b>，名字是画在 Canvas 上的贴图</li>
+        <li>鱼线是实时计算的<b>二次贝塞尔曲线</b>，从鱼竿尖端连到鱼漂</li>
+        <li>水下时整个屏幕会叠加一层<b>蓝色滤镜</b></li>
+        <li>设置里的「灵敏度」在 PC 与触屏使用不同的换算系数</li>
+        <li>关闭海面波浪时，水面会被强制压平成 y = 0 的平面</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq">
+  <h2>常见问题 FAQ</h2>
+
+  <div class="card">
+    <h3 style="margin-top:0">为什么我抛竿后一直没鱼咬钩？</h3>
+    <p style="margin-bottom:0">大概率是鱼漂落在了<b>陆地</b>上。只有落在水面的鱼漂才会触发咬钩判定。按收线键收回重新抛一次，注意把准星压到水面上。</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">为什么看不见其他玩家？</h3>
+    <p style="margin-bottom:0">联机依赖公共 MQTT 服务器，可能因为网络环境、防火墙或服务器繁忙导致连接失败。打开浏览器控制台查看是否输出「MQTT 已连接」。另外，其他玩家需要<b>先广播一次</b>才会被创建，通常几秒内就能看到。</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">皮肤选了却没生效？</h3>
+    <p style="margin-bottom:0">需要浏览器支持 File System Access API（Chrome / Edge 89+）。另外文件被移动、重命名或删除后，下次打开会回退到默认黑色圆柱体，重新选一次即可。Safari 与部分移动端浏览器不支持该功能。</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">游戏卡顿怎么办？</h3>
+    <p style="margin-bottom:0">按 <kbd>Esc</kbd> 打开设置，把「海面波浪」和「显示草地」都设为 0。这两个是性能大户，关闭后帧率通常有明显提升。</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">换了浏览器存档还在吗？</h3>
+    <p style="margin-bottom:0">不在。存档保存在当前浏览器的 localStorage 中，换浏览器、换设备、清除浏览器数据都会丢失。皮肤句柄同样只存在于当前浏览器的 IndexedDB 中。</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">满级之后还能做什么？</h3>
+    <p style="margin-bottom:0">满级（10 级）后升级按钮会隐藏。剩下的目标就是：收集满背包、钓到那条 0.036% 的大肥鱼、和房间里的玩家聊天，或者换个皮肤继续钓鱼。</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><b>fishing</b>（LL-team AB）非官方 Wiki · 内容依据游戏源码整理</p>
+  <p style="margin-bottom:0;opacity:.6">本页面为独立文档，与游戏本体分离</p>
+</footer>
+
+<div id="toTop">↑</div>
+
+<script>
+/* ==================== 鱼类数据 ==================== */
+const FISH = [
+  { name:'金鱼',   price:5,     weight:25   },
+  { name:'青鱼',   price:8,     weight:20   },
+  { name:'泥鳅',   price:10,    weight:15   },
+  { name:'鲈鱼',   price:13,    weight:15   },
+  { name:'鲍鱼',   price:5,     weight:15   },
+  { name:'鲩鱼',   price:20,    weight:20   },
+  { name:'草鱼',   price:15,    weight:10   },
+  { name:'章鱼',   price:25,    weight:8    },
+  { name:'螃蟹',   price:10,    weight:12   },
+  { name:'大肥鱼', price:10000, weight:0.05, rare:true }
+];
+
+const TOTAL_W = FISH.reduce((s,f) => s + f.weight, 0);
+
+(function renderFish(){
+  const tbody = document.getElementById('fish-tbody');
+  const sorted = [...FISH].sort((a,b) => a.price - b.price);
+  tbody.innerHTML = sorted.map(f => {
+    const pct = f.weight / TOTAL_W * 100;
+    const pctText = pct >= 1 ? pct.toFixed(2) + '%' : pct.toFixed(4) + '%';
+    const barW = Math.max(pct * 5, 1.5).toFixed(1);
+    return `<tr>
+      <td>${f.rare ? `<span class="rare">${f.name}</span>` : f.name}</td>
+      <td class="num price">￥${f.price}</td>
+      <td class="num" style="color:var(--dim)">${f.weight}</td>
+      <td class="num">${pctText}</td>
+      <td><div class="bar ${f.rare ? 'gold' : ''}"><i style="width:${barW}%"></i></div></td>
+    </tr>`;
+  }).join('') + `
+    <tr style="background:rgba(0,255,255,.04)">
+      <td>虾 <span style="color:var(--dim);font-size:12px">（额外产出）</span></td>
+      <td class="num price">￥1</td>
+      <td class="num" style="color:var(--dim)">—</td>
+      <td class="num">75% 概率附加</td>
+      <td><div class="bar"><i style="width:60%"></i></div></td>
+    </tr>`;
+})();
+
+/* ==================== 鱼竿数据 ==================== */
+const RODS = [
+  { lv:1,  color:'#FFFFFF', name:'白色',   wait:20 },
+  { lv:2,  color:'#D3D3D3', name:'浅灰',   wait:18 },
+  { lv:3,  color:'#A52A2A', name:'棕色',   wait:16 },
+  { lv:4,  color:'#FF0000', name:'红色',   wait:14 },
+  { lv:5,  color:'#008000', name:'绿色',   wait:12 },
+  { lv:6,  color:'#FFFF00', name:'黄色',   wait:10 },
+  { lv:7,  color:'#FFA500', name:'橙色',   wait:8  },
+  { lv:8,  color:'#800080', name:'紫色',   wait:6  },
+  { lv:9,  color:'#ADD8E6', name:'浅蓝',   wait:3  },
+  { lv:10, color:'#0000FF', name:'蓝色',   wait:1.5 }
+];
+
+function upgradeCost(lv){ return Math.pow(2, lv - 1) * 100; }
+
+(function renderRods(){
+  const tbody = document.getElementById('rod-tbody');
+  tbody.innerHTML = RODS.map(r => {
+    const next = r.lv < 10
+      ? `<span class="price">￥${upgradeCost(r.lv)}</span>`
+      : `<span style="color:var(--gold)">已满级</span>`;
+    return `<tr>
+      <td><b style="color:${r.lv===10?'var(--gold)':'#fff'}">Lv.${r.lv}</b></td>
+      <td>
+        <span style="display:inline-block;width:16px;height:16px;border-radius:4px;
+        background:${r.color};border:1px solid rgba(255,255,255,.6);
+        vertical-align:-3px;margin-right:8px"></span>${r.name}
+      </td>
+      <td class="num">${r.wait} 秒</td>
+      <td class="num">${next}</td>
+    </tr>`;
+  }).join('');
+})();
+
+/* ==================== 升级计算器 ==================== */
+const lvlRange = document.getElementById('lvlRange');
+const lvlText  = document.getElementById('lvlText');
+const outCost  = document.getElementById('outCost');
+const outSteps = document.getElementById('outSteps');
+const outWait  = document.getElementById('outWait');
+const outFish  = document.getElementById('outFish');
+
+const AVG_PER_CATCH = 15.6;
+
+function updateCalc(){
+  const lv = parseInt(lvlRange.value, 10);
+  const total = 100 * (512 - Math.pow(2, lv - 1));
+  const steps = 10 - lv;
+  const wait  = RODS[lv - 1].wait;
+  const rods  = Math.ceil(total / AVG_PER_CATCH);
+
+  lvlText.textContent  = lv;
+  outCost.textContent  = total.toLocaleString();
+  outSteps.textContent = steps;
+  outWait.textContent  = wait + 's';
+  outFish.textContent  = rods.toLocaleString();
+}
+
+lvlRange.addEventListener('input', updateCalc);
+updateCalc();
+
+/* ==================== 回到顶部 ==================== */
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  toTop.classList.toggle('show', window.scrollY > 400);
+});
+toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+</script>
+
+</body>
+</html>
